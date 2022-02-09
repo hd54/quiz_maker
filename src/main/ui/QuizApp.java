@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class QuizApp {
     private QuestionsFile questionsFile;
     private Scanner input;
-    private List<String> validChoices;
 
     // EFFECTS: runs the quiz application
     public QuizApp() {
@@ -45,12 +44,6 @@ public class QuizApp {
     private void init() {
         questionsFile = new QuestionsFile();
         input = new Scanner(System.in);
-
-        validChoices = new ArrayList<>();
-        validChoices.add("A");
-        validChoices.add("B");
-        validChoices.add("C");
-        validChoices.add("N/A");
     }
 
     // EFFECTS: displays menu of options to user
@@ -60,6 +53,7 @@ public class QuizApp {
         System.out.println("\tdel -> remove a question");
         System.out.println("\tedit -> edit a question");
         System.out.println("\tview -> view all questions");
+        System.out.println("\ttake -> take the quiz");
         System.out.println("\tquit -> quit");
     }
 
@@ -78,6 +72,9 @@ public class QuizApp {
                 break;
             case "view":
                 doViewQuestions();
+                break;
+            case "take":
+                doTakeQuestions();
                 break;
             default:
                 System.out.println("Invalid command. Please try again.");
@@ -119,7 +116,7 @@ public class QuizApp {
     // EFFECTS: return the valid answer
     private String validInput() {
         String answer = input.next();
-        while (!validChoices.contains(answer.toUpperCase())) {
+        while (!questionsFile.validChoices.contains(answer.toUpperCase())) {
             System.out.println("Invalid input. Please try again.");
             answer = input.next();
         }
@@ -134,8 +131,7 @@ public class QuizApp {
         } else {
             printQuestionsList();
             int index = typeIndex();
-            boolean isValid = isIndexValid(index);
-            if (isValid) {
+            if (questionsFile.isIndexValid(index)) {
                 System.out.println("Do you want to delete question " + index + " ? (yes or no)");
                 String deleteIndication = input.next();
                 indicationAction(index, deleteIndication);
@@ -147,8 +143,7 @@ public class QuizApp {
     // EFFECTS: delete question if indication is yes, do nothing otherwise
     private void indicationAction(int index, String deleteIndication) {
         if (deleteIndication.equalsIgnoreCase("yes")) {
-            Question removed = questionsFile.getQuestionByIndex(index - 1);
-            questionsFile.removeQuestion(removed);
+            questionsFile.removeQuestionByIndex(index);
             System.out.println("Your selected question has been deleted from the file!");
         } else {
             System.out.println("Deletion request cancelled. If input is invalid, please try again.");
@@ -163,28 +158,21 @@ public class QuizApp {
         } else {
             printQuestionsList();
             int index = typeIndex();
-            boolean isValid = isIndexValid(index);
-            if (isValid) {
+            if (questionsFile.isIndexValid(index)) {
                 Question edited = questionsFile.getQuestionByIndex(index - 1);
                 System.out.println("Question " + index + ":");
                 printQuestion(edited, index);
                 selectAndEdit(edited);
+            } else {
+                System.out.println("Invalid input.");
             }
         }
     }
 
+    // EFFECTS: return user input of question index
     private int typeIndex() {
         System.out.println("\nSelect a question by typing its index:");
         return input.nextInt();
-    }
-
-    private boolean isIndexValid(int index) {
-        if (index > questionsFile.getQuestionsList().size() || index <= 0) {
-            System.out.println("Invalid input.");
-            return false;
-        } else {
-            return true;
-        }
     }
 
     // MODIFIES: this
@@ -222,7 +210,7 @@ public class QuizApp {
         String editedInput = validInput();
         System.out.println("Changing answer to:");
         String editedAnswer = input.next();
-        editedQuestion.setAnswerByIndex(validChoices.indexOf(editedInput), editedAnswer);
+        editedQuestion.setAnswerByIndex(questionsFile.validChoices.indexOf(editedInput), editedAnswer);
         System.out.println("Success!");
     }
 
@@ -237,9 +225,8 @@ public class QuizApp {
     private void printQuestion(Question question, int index) {
         System.out.println("\nQuestion " + index + ": " + question.getTopic());
         for (int i = 0; i < question.getAnswers().size(); i++) {
-            System.out.println(validChoices.get(i) + "." + question.getAnswers().get(i));
+            System.out.println(questionsFile.validChoices.get(i) + "." + question.getAnswers().get(i));
         }
-        System.out.println("Correct answer: " + question.getCorrectAnswer());
     }
 
     // EFFECTS: show all question from the file
@@ -254,7 +241,55 @@ public class QuizApp {
         int numbering = 1;
         for (Question q : questionsFile.getQuestionsList()) {
             printQuestion(q, numbering);
+            System.out.println("Correct answer: " + q.getCorrectAnswer());
             numbering++;
+        }
+    }
+
+    // EFFECTS: allows user to play the quiz and give grades after answering all questions
+    private void doTakeQuestions() {
+        int grade = 0;
+        int maxGrade = questionsFile.getQuestionsList().size();
+        int numbering = 1;
+        List<String> userAnswersRecord = new ArrayList<>();
+
+        if (questionsFile.getQuestionsList().isEmpty()) {
+            System.out.println("Unable to play quiz. Please make sure the quiz is not empty.");
+        } else {
+            System.out.println("Quiz initiated! Please type your answer for each question.");
+            for (Question q : questionsFile.getQuestionsList()) {
+                printQuestion(q, numbering);
+                System.out.println("Your answer:");
+                String userAnswer = input.next().toUpperCase();
+                userAnswersRecord.add(userAnswer);
+                if (q.getCorrectAnswer().equals("N/A")) {
+                    maxGrade--;
+                } else if (userAnswer.equals(q.getCorrectAnswer())) {
+                    grade++;
+                }
+                numbering++;
+            }
+            System.out.println("Quiz completed! Test score is " + grade + "/" + maxGrade);
+            showAnswer(userAnswersRecord);
+        }
+    }
+
+    // EFFECTS: return a table that has both user and correct answers by row
+    private void showAnswer(List<String> userAnswersRecord) {
+        Object[][] answersComparisonTable = new String[questionsFile.getQuestionsList().size() + 1][2];
+        List<String> correctList = questionsFile.allCorrectAnswers();
+        answersComparisonTable[0][0] = "Your Answers";
+        answersComparisonTable[0][1] = "Correct Answers";
+
+        System.out.println("\nAnswers:");
+        for (int i = 0; i < questionsFile.getQuestionsList().size(); i++) {
+            answersComparisonTable[i + 1][0] = userAnswersRecord.get(i);
+        }
+        for (int j = 0; j < questionsFile.getQuestionsList().size(); j++) {
+            answersComparisonTable[j + 1][1] = correctList.get(j);
+        }
+        for (Object[] row : answersComparisonTable) {
+            System.out.format("%6s%17s%n", row);
         }
     }
 }

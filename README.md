@@ -25,3 +25,4 @@ try and create an app that can do the very core purpose of creating question ban
 - As a user, I want to be able to delete a question from a file
 - As a user, I want to be able to modify a question from a file (i.e., change topic/answers/correct answer)
 - As a user, I want to be able to view all questions within a file
+- As a user, I want to be able to take the quiz, get my grades and also correct answers for all questions

@@ -6,10 +6,18 @@ import java.util.List;
 // Represents a quiz with a list of questions
 public class QuestionsFile {
     private List<Question> questionsList;
+    private List<String> correctList = new ArrayList<>();
+    public final List<String> validChoices;
 
-    // EFFECTS: create a list of questions
+    // EFFECTS: create a list of questions with the valid choices that can be assigned to correct answer
     public QuestionsFile() {
         this.questionsList = new ArrayList<>();
+        validChoices = new ArrayList<>();
+
+        validChoices.add("A");
+        validChoices.add("B");
+        validChoices.add("C");
+        validChoices.add("N/A");
     }
 
     // MODIFIES: this
@@ -34,7 +42,7 @@ public class QuestionsFile {
         }
     }
 
-    // GETTERS
+    // GETTER
     public List<Question> getQuestionsList() {
         return questionsList;
     }
@@ -43,5 +51,28 @@ public class QuestionsFile {
     // EFFECTS: return the question at index position
     public Question getQuestionByIndex(int index) {
         return questionsList.get(index);
+    }
+
+    // EFFECTS: return a list of all correct answers
+    public List<String> allCorrectAnswers() {
+        correctList = new ArrayList<>();
+        for (Question q : questionsList) {
+            correctList.add(q.getCorrectAnswer());
+        }
+        return correctList;
+    }
+
+    // Assume list is not empty
+    // REQUIRES: 1 <= index <= questionsList.size()
+    // MODIFIES: this
+    // EFFECTS: removes the question by index
+    public void removeQuestionByIndex(int index) {
+        Question removed = questionsList.get(index - 1);
+        questionsList.remove(removed);
+    }
+
+    // EFFECTS: return true if element index is not out of list bounds, else return false
+    public boolean isIndexValid(int index) {
+        return index <= questionsList.size() && index > 0;
     }
 }

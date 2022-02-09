@@ -24,6 +24,7 @@ public class QuestionsFileTest {
     @Test
     public void testConstructor() {
         assertEquals(0, questionsFileOne.getQuestionsList().size());
+        assertEquals(4, questionsFileOne.validChoices.size());
     }
 
     @Test
@@ -41,19 +42,20 @@ public class QuestionsFileTest {
 
     @Test
     public void testRemoveQuestion() {
+        assertFalse(questionsFileOne.removeQuestion(questionOne));
         questionsFileOne.addQuestion(questionOne);
         questionsFileTwo.addQuestion(questionTwo);
         questionsFileTwo.addQuestion(questionThree);
 
-        questionsFileOne.removeQuestion(questionOne);
+        assertTrue(questionsFileOne.removeQuestion(questionOne));
         assertEquals(0, questionsFileOne.getQuestionsList().size());
 
-        questionsFileTwo.removeQuestion(questionOne);
-        assertEquals(2, questionsFileTwo.getQuestionsList().size());
-        questionsFileTwo.removeQuestion(questionTwo);
+        assertFalse(questionsFileTwo.removeQuestion(questionOne));
+        assertTrue(questionsFileTwo.removeQuestion(questionTwo));
         assertEquals(1, questionsFileTwo.getQuestionsList().size());
-        questionsFileTwo.removeQuestion(questionThree);
+        assertTrue(questionsFileTwo.removeQuestion(questionThree));
         assertEquals(0, questionsFileTwo.getQuestionsList().size());
+        assertFalse(questionsFileTwo.removeQuestion(questionOne));
     }
 
     @Test
@@ -64,5 +66,37 @@ public class QuestionsFileTest {
 
         assertEquals(questionOne, questionsFileOne.getQuestionByIndex(0));
         assertEquals(questionThree, questionsFileOne.getQuestionByIndex(2));
+    }
+
+    @Test
+    public void testAllCorrectAnswers() {
+        assertEquals(0, questionsFileOne.allCorrectAnswers().size());
+        questionOne.setCorrectAnswer("A");
+        questionsFileOne.addQuestion(questionOne);
+        assertEquals(1, questionsFileOne.allCorrectAnswers().size());
+        assertEquals("A", questionsFileOne.allCorrectAnswers().get(0));
+        questionsFileOne.addQuestion(questionTwo);
+        assertEquals(2, questionsFileOne.allCorrectAnswers().size());
+        assertEquals("", questionsFileOne.allCorrectAnswers().get(1));
+    }
+
+    @Test
+    public void testRemoveQuestionByIndex() {
+        questionsFileOne.addQuestion(questionOne);
+        questionsFileOne.addQuestion(questionTwo);
+        questionsFileOne.removeQuestionByIndex(2);
+        assertEquals(1, questionsFileOne.getQuestionsList().size());
+        assertEquals(questionOne, questionsFileOne.getQuestionByIndex(0));
+        questionsFileOne.removeQuestionByIndex(1);
+        assertEquals(0, questionsFileOne.getQuestionsList().size());
+    }
+
+    @Test
+    public void testIsIndexValid() {
+        questionsFileOne.addQuestion(questionOne);
+        assertFalse(questionsFileOne.isIndexValid(-1));
+        assertFalse(questionsFileOne.isIndexValid(0));
+        assertTrue(questionsFileOne.isIndexValid(1));
+        assertFalse(questionsFileOne.isIndexValid(2));
     }
 }
