@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuestionsFileTest {
@@ -98,5 +101,30 @@ public class QuestionsFileTest {
         assertFalse(questionsFileOne.isIndexValid(0));
         assertTrue(questionsFileOne.isIndexValid(1));
         assertFalse(questionsFileOne.isIndexValid(2));
+    }
+
+    @Test
+    public void testValidMaxGrade() {
+        assertEquals(0, questionsFileOne.validMaxGrade());
+        questionsFileOne.addQuestion(questionOne);
+        assertEquals(1, questionsFileOne.validMaxGrade());
+        questionTwo.setCorrectAnswer("A");
+        questionsFileOne.addQuestion(questionTwo);
+        assertEquals(2, questionsFileOne.validMaxGrade());
+        questionTwo.setCorrectAnswer("N/A");
+        assertEquals(1, questionsFileOne.validMaxGrade());
+    }
+
+    @Test
+    public void testProduceGrade() {
+        List<String> userAnswerRecord = new ArrayList<>();
+        assertEquals(0, questionsFileOne.produceGrade(userAnswerRecord));
+        userAnswerRecord.add("A");
+        userAnswerRecord.add("B");
+        questionOne.setCorrectAnswer("A");
+        questionTwo.setCorrectAnswer("B");
+        questionsFileOne.addQuestion(questionOne);
+        questionsFileOne.addQuestion(questionTwo);
+        assertEquals(2, questionsFileOne.produceGrade(userAnswerRecord));
     }
 }

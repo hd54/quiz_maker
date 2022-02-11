@@ -248,27 +248,22 @@ public class QuizApp {
 
     // EFFECTS: allows user to play the quiz and give grades after answering all questions
     private void doTakeQuestions() {
-        int grade = 0;
-        int maxGrade = questionsFile.getQuestionsList().size();
-        int numbering = 1;
         List<String> userAnswersRecord = new ArrayList<>();
+        int maxGrade = questionsFile.validMaxGrade();
 
         if (questionsFile.getQuestionsList().isEmpty()) {
             System.out.println("Unable to play quiz. Please make sure the quiz is not empty.");
         } else {
+            int numbering = 1;
             System.out.println("Quiz initiated! Please type your answer for each question.");
             for (Question q : questionsFile.getQuestionsList()) {
                 printQuestion(q, numbering);
                 System.out.println("Your answer:");
                 String userAnswer = input.next().toUpperCase();
                 userAnswersRecord.add(userAnswer);
-                if (q.getCorrectAnswer().equals("N/A")) {
-                    maxGrade--;
-                } else if (userAnswer.equals(q.getCorrectAnswer())) {
-                    grade++;
-                }
                 numbering++;
             }
+            int grade = questionsFile.produceGrade(userAnswersRecord);
             System.out.println("Quiz completed! Test score is " + grade + "/" + maxGrade);
             showAnswer(userAnswersRecord);
         }

@@ -8,11 +8,16 @@ public class QuestionsFile {
     private List<Question> questionsList;
     private List<String> correctList = new ArrayList<>();
     public final List<String> validChoices;
+    private int grade;
+    private int maxGrade;
 
-    // EFFECTS: create a list of questions with the valid choices that can be assigned to correct answer
+    // EFFECTS: create a list of questions with the list of accepted answers.
+    //          initialized grading system
     public QuestionsFile() {
         this.questionsList = new ArrayList<>();
         validChoices = new ArrayList<>();
+        grade = 0;
+        maxGrade = 0;
 
         validChoices.add("A");
         validChoices.add("B");
@@ -74,5 +79,30 @@ public class QuestionsFile {
     // EFFECTS: return true if element index is not out of list bounds, else return false
     public boolean isIndexValid(int index) {
         return index <= questionsList.size() && index > 0;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: implement a grading system for the quiz user is taking
+    public int validMaxGrade() {
+        maxGrade = questionsList.size();
+        for (Question q : questionsList) {
+            if (q.getCorrectAnswer().equals("N/A")) {
+                maxGrade--;
+            }
+        }
+        return maxGrade;
+    }
+
+    // REQUIRES: userAnswerRecord has same size as questionsList and only contains "A","B", or "C"
+    // MODIFIES: this
+    // EFFECTS: compare list with user answers with the correct answer list.
+    //          increments grade by 1 if elements in same index of each list are equal, then return final grade
+    public int produceGrade(List<String> userAnswerRecord) {
+        for (int i = 0; i < questionsList.size(); i++) {
+            if (userAnswerRecord.get(i).equals(questionsList.get(i).getCorrectAnswer())) {
+                grade++;
+            }
+        }
+        return grade;
     }
 }
