@@ -98,6 +98,7 @@ public class QuestionsFile {
     // EFFECTS: compare list with user answers with the correct answer list.
     //          increments grade by 1 if elements in same index of each list are equal, then return final grade
     public int produceGrade(List<String> userAnswerRecord) {
+        grade = 0;
         for (int i = 0; i < questionsList.size(); i++) {
             if (userAnswerRecord.get(i).equals(questionsList.get(i).getCorrectAnswer())) {
                 grade++;

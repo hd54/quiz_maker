@@ -44,15 +44,17 @@ public class QuestionsFileTest {
     }
 
     @Test
-    public void testRemoveQuestion() {
+    public void testRemoveQuestionOnce() {
         assertFalse(questionsFileOne.removeQuestion(questionOne));
         questionsFileOne.addQuestion(questionOne);
-        questionsFileTwo.addQuestion(questionTwo);
-        questionsFileTwo.addQuestion(questionThree);
-
         assertTrue(questionsFileOne.removeQuestion(questionOne));
         assertEquals(0, questionsFileOne.getQuestionsList().size());
+    }
 
+    @Test
+    public void testRemoveQuestionMultiple() {
+        questionsFileTwo.addQuestion(questionTwo);
+        questionsFileTwo.addQuestion(questionThree);
         assertFalse(questionsFileTwo.removeQuestion(questionOne));
         assertTrue(questionsFileTwo.removeQuestion(questionTwo));
         assertEquals(1, questionsFileTwo.getQuestionsList().size());
@@ -66,7 +68,6 @@ public class QuestionsFileTest {
         questionsFileOne.addQuestion(questionOne);
         questionsFileOne.addQuestion(questionTwo);
         questionsFileOne.addQuestion(questionThree);
-
         assertEquals(questionOne, questionsFileOne.getQuestionByIndex(0));
         assertEquals(questionThree, questionsFileOne.getQuestionByIndex(2));
     }
@@ -116,7 +117,7 @@ public class QuestionsFileTest {
     }
 
     @Test
-    public void testProduceGrade() {
+    public void testProduceGradeAllCorrect() {
         List<String> userAnswerRecord = new ArrayList<>();
         assertEquals(0, questionsFileOne.produceGrade(userAnswerRecord));
         userAnswerRecord.add("A");
@@ -126,5 +127,17 @@ public class QuestionsFileTest {
         questionsFileOne.addQuestion(questionOne);
         questionsFileOne.addQuestion(questionTwo);
         assertEquals(2, questionsFileOne.produceGrade(userAnswerRecord));
+    }
+
+    @Test
+    public void testProduceGradeSomeIncorrect() {
+        List<String> userAnswerRecord = new ArrayList<>();
+        userAnswerRecord.add("A");
+        userAnswerRecord.add("B");
+        questionOne.setCorrectAnswer("A");
+        questionTwo.setCorrectAnswer("C");
+        questionsFileOne.addQuestion(questionOne);
+        questionsFileOne.addQuestion(questionTwo);
+        assertEquals(1, questionsFileOne.produceGrade(userAnswerRecord));
     }
 }

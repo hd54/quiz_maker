@@ -196,6 +196,7 @@ public class QuizApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: edit topic
     private void editTopic(Question editedQuestion) {
         System.out.println("edited to:");
@@ -204,6 +205,7 @@ public class QuizApp {
         System.out.println("Success!");
     }
 
+    // MODIFIES: this
     // EFFECTS: edit an answer
     private void editAnswers(Question editedQuestion) {
         System.out.println("Select answer you wish to change:");
@@ -214,6 +216,7 @@ public class QuizApp {
         System.out.println("Success!");
     }
 
+    // MODIFIES: this
     // EFFECTS: edit correct answer
     private void editCorrect(Question editedQuestion) {
         System.out.println("edited to:");
