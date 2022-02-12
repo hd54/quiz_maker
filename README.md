@@ -15,9 +15,11 @@ friends and family to have a fun social time together.
 ### Inspiration
 
 My main inspiration for this idea comes from Kahoot, a very fun, interactive learning platform where everyone can create
-their own quizzes and invite others to play it by typing in an access code. I am also fascinated by the fact that
-multiple different tests can be simultaneously created from a question bank to ensure exam fairness. Hence, I want to
-try and create an app that can do the very core purpose of creating question banks.
+their own quizzes and invite others to play it by typing in an access code. Another website that is probably more
+familiar to students is Canvas. Canvas allows professors to create homework quiz for their students, and it can include
+multiple-choice, with one or several correct answers, and even reflective questions where students can type in their
+proof or arguments. Hence, I want to try and create an app that can do one of the core function of these websites:
+creating a quiz. For this program, I will only be focusing on designing multiple-choice quiz maker.
 
 ## User Stories
 
