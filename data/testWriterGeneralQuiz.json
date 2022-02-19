@@ -1,0 +1,29 @@
+{"questions": [
+    {
+        "correct answers": "A",
+        "answers": [
+            "4",
+            "5",
+            "6"
+        ],
+        "topic": "What is 2+2?"
+    },
+    {
+        "correct answers": "B",
+        "answers": [
+            "White",
+            "Pink",
+            "Red"
+        ],
+        "topic": "What is the opposite of black?"
+    },
+    {
+        "correct answers": "N/A",
+        "answers": [
+            "Yes",
+            "No",
+            "Maybe"
+        ],
+        "topic": "Is Java the best language?"
+    }
+]}

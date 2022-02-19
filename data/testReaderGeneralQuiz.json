@@ -1,0 +1,29 @@
+{"questions": [
+    {
+        "correct answers": "N/A",
+        "answers": [
+            "Egg",
+            "Tomato",
+            "Lemon"
+        ],
+        "topic": "What is life?"
+    },
+    {
+        "correct answers": "C",
+        "answers": [
+            "15",
+            "F",
+            "4 1s"
+        ],
+        "topic": "What is 1111?"
+    },
+    {
+        "correct answers": "A",
+        "answers": [
+            "Canada",
+            "USA",
+            "Mars"
+        ],
+        "topic": "Where is UBC?"
+    }
+]}

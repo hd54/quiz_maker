@@ -2,18 +2,29 @@ package ui;
 
 import model.Question;
 import model.QuestionsFile;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// some codes are taken (and remodeled for this class) from https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// some codes are modeled from https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class QuizApp {
+    private static final String JSON_STORE = "./data/quiz.json";
     private QuestionsFile questionsFile;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the quiz application
-    public QuizApp() {
+    public QuizApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        questionsFile = new QuestionsFile();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runQuizApp();
     }
 
@@ -22,8 +33,7 @@ public class QuizApp {
     private void runQuizApp() {
         boolean keepGoing = true;
         String command;
-
-        init();
+        input = new Scanner(System.in);
 
         while (keepGoing) {
             displayMenu();
@@ -39,13 +49,6 @@ public class QuizApp {
         System.out.println("\nThanks for visiting. See you next time!");
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes questions file
-    private void init() {
-        questionsFile = new QuestionsFile();
-        input = new Scanner(System.in);
-    }
-
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nWelcome to QuizApp. What do you want to do today?");
@@ -54,31 +57,30 @@ public class QuizApp {
         System.out.println("\tedit -> edit a question");
         System.out.println("\tview -> view all questions");
         System.out.println("\ttake -> take the quiz");
+        System.out.println("\tsave -> save the quiz");
+        System.out.println("\tload -> load the quiz");
         System.out.println("\tquit -> quit");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
-        switch (command) {
-            case "add":
-                doAddQuestion();
-                break;
-            case "del":
-                doRemoveQuestion();
-                break;
-            case "edit":
-                doEditQuestion();
-                break;
-            case "view":
-                doViewQuestions();
-                break;
-            case "take":
-                doTakeQuestions();
-                break;
-            default:
-                System.out.println("Invalid command. Please try again.");
-                break;
+        if (command.equals("add")) {
+            doAddQuestion();
+        } else if (command.equals("del")) {
+            doRemoveQuestion();
+        } else if (command.equals("edit")) {
+            doEditQuestion();
+        } else if (command.equals("view")) {
+            doViewQuestions();
+        } else if (command.equals("take")) {
+            doTakeQuestions();
+        } else if (command.equals("save")) {
+            doSaveQuestions();
+        } else if (command.equals("load")) {
+            doLoadQuestions();
+        } else {
+            System.out.println("Invalid command. Please try again.");
         }
     }
 
@@ -288,6 +290,29 @@ public class QuizApp {
         }
         for (Object[] row : answersComparisonTable) {
             System.out.format("%6s%17s%n", row);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads quiz from file
+    private void doSaveQuestions() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(questionsFile);
+            jsonWriter.close();
+            System.out.println("File saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the quiz to file
+    private void doLoadQuestions() {
+        try {
+            questionsFile = jsonReader.read();
+            System.out.println("File loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

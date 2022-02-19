@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a quiz with a list of questions
-public class QuestionsFile {
+public class QuestionsFile implements Writable {
     private List<Question> questionsList;
     private List<String> correctList = new ArrayList<>();
     public final List<String> validChoices;
@@ -105,5 +109,25 @@ public class QuestionsFile {
             }
         }
         return grade;
+    }
+
+    // 2 blocks below are modeled from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    // EFFECTS: converts the questions file to a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("questions", questionsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns questions in the questions list as a JSON array
+    private JSONArray questionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Question q : questionsList) {
+            jsonArray.put(q.toJson());
+        }
+
+        return jsonArray;
     }
 }
