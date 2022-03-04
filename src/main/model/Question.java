@@ -13,7 +13,6 @@ public class Question implements Writable {
     private List<String> answers;
     private String correctAnswer;
 
-    // REQUIRES: no topic has zero length
     // EFFECTS: create a basic question with a topic and empty answers (no correct answer)
     public Question(String topic) {
         this.topic = topic;
