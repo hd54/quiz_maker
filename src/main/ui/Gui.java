@@ -62,6 +62,7 @@ public class Gui extends JFrame implements ActionListener {
         window.dispose();
     }
 
+    // MODIFIES: this
     // EFFECTS: initialize panel for questions to appear on
     private void initializeDataPanel() {
         dataFile = new JList<>(dataFileModel);
@@ -129,6 +130,7 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     // some codes are modeled from https://github.students.cs.ubc.ca/CPSC210/TellerApp
+    // MODIFIES: this
     // EFFECTS: intialize load window when open application
     private void intializeLoad() {
         JPanel loadPanel = inititiatePersistencePanel("Load changes from file?");
@@ -200,7 +202,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-    // MODFIES: this
+    // MODFIES: this, questionsFile
     // EFFECTS: initialize a window for adding question
     private void initializeAddWindow() {
         ButtonWindow addWindow = new ButtonWindow(600, 400);
@@ -211,7 +213,7 @@ public class Gui extends JFrame implements ActionListener {
         updateChange();
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, questionsFile
     // EFFECTS: initialize a window for editing question
     private void initializeEditWindow() {
         ButtonWindow editWindow = new ButtonWindow(600, 400);
@@ -227,7 +229,7 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     // codes modelled from https://stackoverflow.com/questions/19396717/how-do-i-display-a-list-of-items-in-a-jscrollpane
-    // MODIFIES: this
+    // MODIFIES: this, questionsFile
     // EFFECTS: delete selected question and update window to show change
     private void doDelete() {
         try {

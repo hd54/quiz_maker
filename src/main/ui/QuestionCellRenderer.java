@@ -10,6 +10,7 @@ import java.util.List;
 //                     https://stackoverflow.com/questions/28910200/how-to-print-settext-on-multiple-lines-of-a-jlabel
 public class QuestionCellRenderer extends DefaultListCellRenderer {
 
+    // EFFECTS: produce basic design of a question to appear on screen
     @Override
     public Component getListCellRendererComponent(
             JList list, Object value, int index,
@@ -27,7 +28,6 @@ public class QuestionCellRenderer extends DefaultListCellRenderer {
                     + "<br/> Correct Answer: " + correct
                     + "<br/>" + "<hr style=\"border-width:0;\">" + "</html>");
         }
-
         return this;
     }
 }

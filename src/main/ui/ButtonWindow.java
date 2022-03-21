@@ -48,7 +48,6 @@ public class ButtonWindow {
         controlPanel.add(topic);
     }
 
-    //
     // MODIFIES: this
     // EFFECTS: add answers field to window
     private void setAnswersField() {
