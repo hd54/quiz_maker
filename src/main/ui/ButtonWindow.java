@@ -107,7 +107,7 @@ public class ButtonWindow {
 
     // MODIFIES: this
     // EFFECTS: open new window, edit existing question and update main window if edited
-    protected void doEdit(Question question) {
+    protected Question doEdit(Question question) {
         topic.setText(question.getTopic());
         List<String> answerTexts = question.getAnswers();
         answerA.setText(answerTexts.get(0));
@@ -116,8 +116,16 @@ public class ButtonWindow {
         correct.setText(question.getCorrectAnswer());
         controlPanel.revalidate();
         controlPanel.repaint();
-        JOptionPane.showConfirmDialog(null, controlPanel,
+        int editChoice = JOptionPane.showConfirmDialog(null, controlPanel,
                 "Edit your question here:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (editChoice == JOptionPane.OK_OPTION) {
+            Question edited = new Question(topic.getText(), correct.getText());
+            edited.addAnswer(answerA.getText());
+            edited.addAnswer(answerB.getText());
+            edited.addAnswer(answerC.getText());
+            return edited;
+        }
+        return null;
     }
 
     // MODIFIES: this

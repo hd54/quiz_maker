@@ -220,7 +220,9 @@ public class Gui extends JFrame implements ActionListener {
         int index = dataFile.getSelectedIndex();
         if (index != -1) {
             Question questionEdit = questionsFile.getQuestionByIndex(index);
-            editWindow.doEdit(questionEdit);
+            Question questionEdited = editWindow.doEdit(questionEdit);
+            questionsFile.removeQuestion(questionEdit);
+            questionsFile.getQuestionsList().add(index, questionEdited);
         } else {
             new ButtonWindow(0,0);
             JOptionPane.showMessageDialog(null,"Please select a question first");
