@@ -1,13 +1,9 @@
 package ui;
 
-import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            new QuizApp();
-        } catch (FileNotFoundException e) {
-            System.err.println("Unable to run application: file not found");
-        }
+        new Gui();
     }
 }

@@ -76,7 +76,7 @@ public class QuestionsFile implements Writable {
     // MODIFIES: this
     // EFFECTS: removes the question by index
     public void removeQuestionByIndex(int index) {
-        Question removed = questionsList.get(index - 1);
+        Question removed = questionsList.get(index);
         questionsList.remove(removed);
     }
 

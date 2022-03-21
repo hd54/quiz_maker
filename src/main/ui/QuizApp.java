@@ -16,8 +16,8 @@ public class QuizApp {
     private static final String JSON_STORE = "./data/quiz.json";
     private QuestionsFile questionsFile;
     private Scanner input;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
     // EFFECTS: runs the quiz application
     public QuizApp() throws FileNotFoundException {

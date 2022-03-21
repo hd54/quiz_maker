@@ -88,10 +88,10 @@ public class QuestionsFileTest {
     public void testRemoveQuestionByIndex() {
         questionsFileOne.addQuestion(questionOne);
         questionsFileOne.addQuestion(questionTwo);
-        questionsFileOne.removeQuestionByIndex(2);
+        questionsFileOne.removeQuestionByIndex(1);
         assertEquals(1, questionsFileOne.getQuestionsList().size());
         assertEquals(questionOne, questionsFileOne.getQuestionByIndex(0));
-        questionsFileOne.removeQuestionByIndex(1);
+        questionsFileOne.removeQuestionByIndex(0);
         assertEquals(0, questionsFileOne.getQuestionsList().size());
     }
 

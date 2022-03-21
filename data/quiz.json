@@ -1,47 +1,38 @@
 {"questions": [
     {
-        "correct answers": "A",
+        "correct answers": "N/A",
         "answers": [
-            "a",
-            "a",
-            "a"
+            "Egg",
+            "Tomato",
+            "Lemon"
         ],
-        "topic": "a"
-    },
-    {
-        "correct answers": "A",
-        "answers": [
-            "a",
-            "a",
-            "a"
-        ],
-        "topic": "a"
-    },
-    {
-        "correct answers": "A",
-        "answers": [
-            "a",
-            "a",
-            "a"
-        ],
-        "topic": "a"
+        "topic": "What is life?"
     },
     {
         "correct answers": "N/A",
         "answers": [
-            "a",
-            "a",
-            "a"
+            "Egg",
+            "Tomato",
+            "Lemon"
         ],
-        "topic": "a"
+        "topic": "What is life?"
     },
     {
-        "correct answers": "B",
+        "correct answers": "N/A",
         "answers": [
-            "a",
-            "a",
-            "a"
+            "Egg",
+            "Tomato",
+            "Lemon"
         ],
-        "topic": "a"
+        "topic": "What is life?"
+    },
+    {
+        "correct answers": "N/A",
+        "answers": [
+            "Egg",
+            "Tomato",
+            "Lemon"
+        ],
+        "topic": "What is life?"
     }
 ]}
