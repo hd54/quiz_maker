@@ -9,30 +9,21 @@
         "topic": "What is life?"
     },
     {
-        "correct answers": "N/A",
+        "correct answers": "C",
         "answers": [
-            "Egg",
-            "Tomato",
-            "Lemon"
+            "15",
+            "F",
+            "4 1s"
         ],
-        "topic": "A"
+        "topic": "What is 1111?"
     },
     {
-        "correct answers": "N/A",
+        "correct answers": "A",
         "answers": [
-            "Egg",
-            "Tomato",
-            "Lemon"
+            "Canada",
+            "USA",
+            "Mars"
         ],
-        "topic": "What is life?"
-    },
-    {
-        "correct answers": "N/A",
-        "answers": [
-            "Egg",
-            "Tomato",
-            "Lemon"
-        ],
-        "topic": "A"
+        "topic": "Where is UBC?"
     }
 ]}

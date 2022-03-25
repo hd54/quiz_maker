@@ -125,12 +125,12 @@ public class ButtonWindow {
             edited.addAnswer(answerC.getText());
             return edited;
         }
-        return null;
+        return question;
     }
 
     // MODIFIES: this
     // EFFECTS: open new window and intitiate a quiz
     protected void doQuiz() {
-
+        // not implemented yet
     }
 }
