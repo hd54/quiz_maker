@@ -30,3 +30,48 @@ creating a quiz. For this program, I will only be focusing on designing multiple
 - As a user, I want to be able to take the quiz, get my grades and also correct answers for all questions
 - As a user, I want to be able to save my question file
 - As a user, I want to be able to load my question file
+
+## Phase 4: Task 2
+- Sample for when user loads saved file, adding and deleting a question:
+
+File loaded from ./data/quiz.json
+
+Tue Mar 29 10:21:23 PDT 2022
+New question added.
+
+
+Tue Mar 29 10:21:23 PDT 2022
+New question added.
+
+
+Tue Mar 29 10:21:23 PDT 2022
+New question added.
+
+
+Tue Mar 29 10:21:23 PDT 2022
+New question added.
+
+
+Tue Mar 29 10:21:32 PDT 2022
+New question added.
+
+
+Tue Mar 29 10:21:33 PDT 2022
+Question 5 deleted.
+
+- Deleting question shows the index of removed question.
+
+## Phase 4: Task 3
+
+Reflection on program design:
+
+- Dependencies on **Gui** on certain classes (**BorderlessTextField** and
+**QuestionCellRender**), since they only have one usage only
+in Gui and nowhere else. For example, **BorderlessTextField** can be
+implemented as an anonymous class with the overridden methods.
+Cohesion should still be maintained, since these classes do not pose as
+too many responsibilities if included in **Gui**.
+- **Gui** and **ButtonWindow** can extend a new abstract class (**ApplicationWindow**
+for example) that deals with initializing window design (method that create a 
+generic panel from given size as parameters) to avoid some duplicates, since
+these classes share some similar properties which can be seen in their constructors.

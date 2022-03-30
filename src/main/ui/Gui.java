@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Question;
 import model.QuestionsFile;
 import persistence.JsonReader;
@@ -10,8 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 // graphical user interface
 public class Gui extends JFrame implements ActionListener {
@@ -101,8 +101,16 @@ public class Gui extends JFrame implements ActionListener {
                         System.out.println("Unable to write to file: " + JSON_STORE);
                     }
                 }
+                printLog(EventLog.getInstance());
             }
         });
+    }
+
+    // EFFECTS: print to the console all the events that have been logged since the application started after quit
+    private void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println("\n" + next.toString() + "\n");
+        }
     }
 
     // EFFECTS: create a logo to put in persistence window (for fun)
@@ -236,9 +244,14 @@ public class Gui extends JFrame implements ActionListener {
     private void doDelete() {
         try {
             int index = dataFile.getSelectedIndex();
-            questionsFile.removeQuestionByIndex(index);
-            updateChange();
-            dataFile.setSelectedIndex(0);
+            if (index != -1) {
+                questionsFile.removeQuestionByIndex(index);
+                updateChange();
+                dataFile.setSelectedIndex(0);
+            } else {
+                new ButtonWindow(0,0);
+                JOptionPane.showMessageDialog(null,"Please select a question first");
+            }
         } catch (IndexOutOfBoundsException e) {
             //
         }

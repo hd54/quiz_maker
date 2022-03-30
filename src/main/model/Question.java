@@ -10,7 +10,7 @@ import java.util.List;
 // Represents a question with a topic, a list of answers, and the correct answer
 public class Question implements Writable {
     private String topic;
-    private List<String> answers;
+    private final List<String> answers;
     private String correctAnswer;
 
     // EFFECTS: create a basic question with a topic and empty answers (no correct answer)

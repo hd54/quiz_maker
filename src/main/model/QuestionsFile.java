@@ -9,8 +9,7 @@ import java.util.List;
 
 // Represents a quiz with a list of questions
 public class QuestionsFile implements Writable {
-    private List<Question> questionsList;
-    private List<String> correctList = new ArrayList<>();
+    private final List<Question> questionsList;
     public final List<String> validChoices;
     private int grade;
     private int maxGrade;
@@ -33,6 +32,7 @@ public class QuestionsFile implements Writable {
     // EFFECTS: add a new question to file and return true, if not new return false
     public boolean addQuestion(Question question) {
         if (!questionsList.contains(question)) {
+            EventLog.getInstance().logEvent(new Event("New question added."));
             questionsList.add(question);
             return true;
         } else {
@@ -44,6 +44,8 @@ public class QuestionsFile implements Writable {
     // EFFECTS: remove an existing question from file and return true, if not exist return false
     public boolean removeQuestion(Question question) {
         if (questionsList.contains(question)) {
+            EventLog.getInstance().logEvent(
+                    new Event("Question" + questionsList.indexOf(question) + "deleted."));
             questionsList.remove(question);
             return true;
         } else {
@@ -64,7 +66,7 @@ public class QuestionsFile implements Writable {
 
     // EFFECTS: return a list of all correct answers
     public List<String> allCorrectAnswers() {
-        correctList = new ArrayList<>();
+        List<String> correctList = new ArrayList<>();
         for (Question q : questionsList) {
             correctList.add(q.getCorrectAnswer());
         }
@@ -77,6 +79,8 @@ public class QuestionsFile implements Writable {
     // EFFECTS: removes the question by index
     public void removeQuestionByIndex(int index) {
         Question removed = questionsList.get(index);
+        EventLog.getInstance().logEvent(
+                new Event("Question " + (index + 1) + " deleted."));
         questionsList.remove(removed);
     }
 

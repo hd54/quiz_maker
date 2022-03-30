@@ -1,29 +1,38 @@
 {"questions": [
     {
-        "correct answers": "N/A",
+        "correct answers": "",
         "answers": [
-            "Egg",
-            "Tomato",
-            "Lemon"
+            "CA",
+            "A",
+            "AW"
         ],
-        "topic": "What is life?"
-    },
-    {
-        "correct answers": "C",
-        "answers": [
-            "15",
-            "F",
-            "4 1s"
-        ],
-        "topic": "What is 1111?"
+        "topic": "B"
     },
     {
         "correct answers": "A",
         "answers": [
-            "Canada",
-            "USA",
-            "Mars"
+            "A",
+            "A",
+            "A"
         ],
-        "topic": "Where is UBC?"
+        "topic": "A"
+    },
+    {
+        "correct answers": "B",
+        "answers": [
+            "ACA",
+            "CA",
+            "DA"
+        ],
+        "topic": "ABC"
+    },
+    {
+        "correct answers": "AAA",
+        "answers": [
+            "Â",
+            "AA",
+            "AA"
+        ],
+        "topic": "Â"
     }
 ]}
