@@ -75,18 +75,23 @@ too many responsibilities if included in **Gui**.
 for example) that deals with initializing window design (method that create a 
 generic panel from given size as parameters) to avoid some duplicates, since
 these classes share some similar properties which can be seen in their constructors.
+- Somewhat a minor (optional) refactoring, but **Main** can be merged into **Gui**. Cohesion is
+still maintained, and we have 1 fewer class.
 
 Other reflections:
 
 - New methods can be extracted to avoid duplicate codes. For example,
-**doAdd()** and **doEdit** share similar functionality since they also
+**doAdd()** and **doEdit(Question question)** share similar functionality since they also
 use a similar panel that receives texts typed in textbox by users.
 We can call the method **setUpUserInputs()**
 
-Other notes (what I think I've done well for the project):
+Other notes:
 
 - Cohesion is maintained through introducing new class **ButtonWindow**.
 The class is solely responsible for all button-related panels.
-- Tight coupling does not pose too much issue. We actually avoid tight
-coupling thanks to introducing the **ButtonWindow** class as well. Objects of
-this type are instantiated within a method in **Gui**.
+- Overall no unnecessary coupling. Note that **QuizApp** is the console-based
+ui and remains unused after **Gui** is implemented.
+- Method **doQuiz()** is not implemented yet. What I might want to do in
+the future is to introduce a new class called **QuizPanel** for example.
+A timer may be added to provide more functionality to the program.
+
